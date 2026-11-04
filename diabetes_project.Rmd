@@ -1,0 +1,88 @@
+---
+title: "Diabetes Health Indicators Analysis"
+author: "Heeya Naik"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+
+# Introduction
+
+The Diabetes Health Indicators dataset contains 253,680 survey responses from the 2015 Behavioral Risk Factor Surveillance System (BRFSS). The BRFSS is an annual health-related telephone survey conducted by the Centers for Disease Control and Prevention (CDC) to collect information on health behaviors, chronic health conditions, and other factors affecting the health of adults in the United States. The dataset contains 22 variables covering demographic, behavioral, and health-related characteristics, including body mass index (BMI), high blood pressure, high cholesterol, physical activity, smoking, history of stroke and heart disease, general health, age, sex, education, and income.
+
+The primary outcome of interest is Diabetes_012, which classifies respondents into three categories: no diabetes, prediabetes, or diabetes. This analysis will first describe the distribution of diabetes status and selected characteristics in the dataset. The analysis will then examine patterns in diabetes status according to selected health and behavioral factors, with particular attention to BMI, physical activity, and age. These descriptive analyses will provide preliminary insight into factors that may be associated with diabetes outcomes and will help inform more detailed statistical modeling for the final project.
+
+# Data and Methods
+
+```{r load-data}
+diabetes <- read_csv(
+  "data/diabetes_012_health_indicators_BRFSS2015.csv"
+)
+```
+
+
+```{r data-preparation}
+diabetes <- diabetes %>%
+  mutate(
+    diabetes_status = case_when(
+      Diabetes_012 == 0 ~ "No diabetes",
+      Diabetes_012 == 1 ~ "Prediabetes",
+      Diabetes_012 == 2 ~ "Diabetes"
+    ),
+    bmi_category = case_when(
+      BMI < 18.5 ~ "Underweight",
+      BMI < 25 ~ "Normal weight",
+      BMI < 30 ~ "Overweight",
+      BMI >= 30 ~ "Obesity",
+      TRUE ~ NA_character_
+    )
+  )
+```
+
+## Diabetes Status Distribution
+
+```{r diabetes-table}
+source("R/02_table1.R")
+
+kable(
+  table1,
+  digits = 1,
+  col.names = c(
+    "Diabetes Status",
+    "Number of Participants",
+    "Percentage (%)"
+  ),
+  caption = "Distribution of diabetes status among BRFSS respondents"
+) %>%
+  kable_styling(full_width = FALSE)
+```
+
+Table 1 shows the distribution of diabetes status among the 253,680 BRFSS respondents. Most respondents were classified as having no diabetes (84.2%), while 13.9% were classified as having diabetes and 1.8% were classified as having prediabetes. This table provides an overview of the distribution of the primary outcome in the study population.
+
+
+
+## BMI and Diabetes Status
+
+```{r bmi-figure}
+source("R/03_figure1.R")
+```
+
+Figure 1 shows the distribution of body mass index (BMI) across the three diabetes status groups. The boxplots allow comparison of the median BMI and the overall spread of BMI values among respondents with no diabetes, prediabetes, and diabetes. The figure provides a descriptive view of how BMI varies across diabetes status categories in the study population.
+
+
+
+
+
+
+
