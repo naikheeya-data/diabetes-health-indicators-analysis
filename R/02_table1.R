@@ -21,6 +21,3 @@ table1 <- data.frame(
   `Percentage (%)` = round(as.numeric(diabetes_percentages[c("0", "1", "2")]), 1),
   check.names = FALSE
 )
-
-# Display Table 1
-print(table1)
