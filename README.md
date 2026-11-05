@@ -37,12 +37,14 @@ diabetes_project/
 
 ## Analysis
 
-The project includes:
+The analysis is organized into three separate R scripts:
 
-- Dataset inspection and preparation.
-- Table 1: Distribution of diabetes status.
-- Figure 1: BMI distribution by diabetes status.
-- A reproducible report generated using R Markdown.
+- **Data cleaning (`R/01_data_cleaning.R`):** Inspects and prepares the dataset for analysis.
+- **Table 1 (`R/02_table1.R`):** Creates the descriptive table showing the distribution of diabetes status.
+- **Figure 1 (`R/03_figure1.R`):** Creates a boxplot showing BMI distribution across diabetes status categories.
+
+The final report is written in `diabetes_project.Rmd` and includes the project introduction, data and methods, descriptive summary table, and BMI boxplot.
+
 
 ## Required Software and Packages
 
